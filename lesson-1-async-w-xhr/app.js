@@ -3,16 +3,23 @@
     const searchField = document.querySelector('#search-keyword');
     let searchedForText;
     const responseContainer = document.querySelector('#response-container');
+    const unsplashRequest = new XMLHttpRequest();
 
     form.addEventListener('submit', function (e) {
         e.preventDefault();
         responseContainer.innerHTML = '';
         searchedForText = searchField.value;
+        unsplashRequest.open('GET', `https://api.unsplash.com/photos/?client_id=241fddf0e44aa4e7757f77196d6df2c68aab3ea166cc073e881dca79159f2192&page=1&query=${searchedForText}`);
+        unsplashRequest.onload = addImage;
+        // unsplashRequest.setRequestHeader('Authorization', 'Client-ID 241fddf0e44aa4e7757f77196d6df2c68aab3ea166cc073e881dca79159f2192');
+        unsplashRequest.send();
+
+        function addImage(){
+          debugger;
+        }
     });
 })();
 
-const searchedForText = 'hippos';
-const unsplashRequest = new XMLHttpRequest();
 
 unsplashRequest.open('GET', `https://api.unsplash.com/photos/?client_id=241fddf0e44aa4e7757f77196d6df2c68aab3ea166cc073e881dca79159f2192&page=1&query=${searchedForText}`);
 unsplashRequest.onload = addImage;
