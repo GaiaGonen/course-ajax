@@ -10,13 +10,17 @@
         e.preventDefault();
         responseContainer.innerHTML = '';
         searchedForText = searchField.value;
+
+        /* Call images from unsplash API and print the first one*/
         $.ajax({
           url: `https://api.unsplash.com/search/photos/?client_id=241fddf0e44aa4e7757f77196d6df2c68aab3ea166cc073e881dca79159f2192&page=1&query=${searchedForText}`
         }).done(addImage);
-        const articleRequest = new XMLHttpRequest();
-        articleRequest.onload = addArticles;
-        articleRequest.open('GET', `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=26d6148aac33436f8db38c158b715fce`);
-        articleRequest.send();
+
+        /* Call articles from unsplash API and print them*/
+        $.ajax({
+          url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=26d6148aac33436f8db38c158b715fce`
+        }).done(addArticles);
+
 
         function addImage(data){
           let htmlContent = '';
