@@ -10,22 +10,19 @@
         e.preventDefault();
         responseContainer.innerHTML = '';
         searchedForText = searchField.value;
-        unsplashRequest.open('GET', `https://api.unsplash.com/search/photos/?client_id=241fddf0e44aa4e7757f77196d6df2c68aab3ea166cc073e881dca79159f2192&page=1&query=${searchedForText}`);
-        unsplashRequest.onload = addImage;
-        // unsplashRequest.setRequestHeader('Authorization', 'Client-ID 241fddf0e44aa4e7757f77196d6df2c68aab3ea166cc073e881dca79159f2192');
-        unsplashRequest.send();
-
+        $.ajax({
+          url: `https://api.unsplash.com/search/photos/?client_id=241fddf0e44aa4e7757f77196d6df2c68aab3ea166cc073e881dca79159f2192&page=1&query=${searchedForText}`
+        }).done(addImage);
         const articleRequest = new XMLHttpRequest();
         articleRequest.onload = addArticles;
         articleRequest.open('GET', `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=26d6148aac33436f8db38c158b715fce`);
         articleRequest.send();
 
-        function addImage(){
+        function addImage(data){
           let htmlContent = '';
-          const data = JSON.parse(this.responseText);
-
-          if (data && data.results && data.results[0]) {
-            const firstImage = data.results[0];
+          const images = data.results;
+          if (images[0]) {
+            const firstImage = images[0];
             htmlContent = `<figure>
             <img src="${firstImage.urls.regular}" alt="${searchedForText}">
             <figcaption>${searchedForText} by ${firstImage.user.name}</figcaption>
