@@ -37,12 +37,11 @@
           responseContainer.insertAdjacentHTML('afterbegin', htmlContent);
         }
 
-        function addArticles(){
+        function addArticles(data){
           let htmlContent = '';
-          const data = JSON.parse(this.responseText);
-
-          if (data && data.response && data.response.docs.length > 0) {
-            htmlContent = '<ul>' + data.response.docs.map(article => `<li class="article">
+          const articles = data.response.docs;
+          if (articles.length > 0) {
+            htmlContent = '<ul>' + articles.map(article => `<li class="article">
                               <h2><a href="${article.web_url}">${article.headline.main}</a></h2>
                               <p>${article.snippet}</p>
                               </li>`
