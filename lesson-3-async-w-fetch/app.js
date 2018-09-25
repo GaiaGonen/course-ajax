@@ -16,7 +16,8 @@
 
     /* Call articles from unsplash API and print them*/
     fetch(`https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=26d6148aac33436f8db38c158b715fce`)
-    .then(respomse => respomse.json()).then(addArticles);
+    .then(respomse => respomse.json()).then(addArticles)
+    .catch(e => requestError(e, 'articles'));
 
 
     function addImage(data){
